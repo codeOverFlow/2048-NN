@@ -9,7 +9,7 @@ DROITE = 'DROITE'
 
 class Game():
     def __init__(self):
-        self.mat = [[0,0,0,0],[0,0,0,0],[0,0,0,0], [0,0,0,0]]
+        self.mat = [[2,2,4,0],[0,0,0,0],[0,0,0,0], [0,0,0,0]]
         self.free = [(i, j) for i in range(4) for j in range(4) if not self.mat[i][j]]
         x,y = self.free[randint(0, len(self.free)-1)]
         self.mat[x][y] = 2
@@ -27,6 +27,7 @@ class Game():
                             self.mat[i][j] = 0
                             if self.mat[i][k] != 0:
                                 self.score += 1
+                                break
                         elif self.mat[i][k] == 0:
                             self.mat[i][k] = self.mat[i][j]
                             self.mat[i][j] = 0
@@ -39,6 +40,7 @@ class Game():
                             self.mat[i][j] = 0
                             if self.mat[i][k] != 0:
                                 self.score += 1
+                                break
                         elif self.mat[i][k] == 0:
                             self.mat[i][k] = self.mat[i][j]
                             self.mat[i][j] = 0
@@ -51,6 +53,7 @@ class Game():
                             self.mat[j][i] = 0
                             if self.mat[k][i] != 0:
                                 self.score += 1
+                                break
                         elif self.mat[k][i] == 0:
                             self.mat[k][i] = self.mat[j][i]
                             self.mat[j][i] = 0
@@ -61,10 +64,11 @@ class Game():
                         if self.mat[k][i] == self.mat[j][i]:
                             self.mat[k][i] *= 2
                             self.mat[j][i] = 0
-                            if self.mat[i][k] != 0:
+                            if self.mat[k][i] != 0:
                                 self.score += 1
+                                break
                         elif self.mat[k][i] == 0:
-                            self.mat[k][i] = self.mat[i][j]
+                            self.mat[k][i] = self.mat[j][i]
                             self.mat[j][i] = 0
 
     def play(self, direction):
@@ -83,9 +87,6 @@ class Game():
         print('\n')
 
 g = Game()
-g.play(GAUCHE)
-g.play(HAUT)
-g.play(BAS)
-g.play(GAUCHE)
-g.play(DROITE)
-g.play(BAS)
+
+while True:
+    g.play(input())
