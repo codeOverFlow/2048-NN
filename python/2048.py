@@ -9,7 +9,7 @@ DROITE = 'DROITE'
 
 class Game():
     def __init__(self):
-        self.mat = [[4,4,2,0],[0,0,0,0],[0,0,0,0], [0,0,0,0]]
+        self.mat = [[0,0,0,0],[0,0,0,0],[0,0,0,0], [0,0,0,0]]
         self.free = [(i, j) for i in range(4) for j in range(4) if not self.mat[i][j]]
         x,y = self.free[randint(0, len(self.free)-1)]
         self.mat[x][y] = 2
