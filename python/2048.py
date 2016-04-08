@@ -59,25 +59,27 @@ class Game():
 
 
     def update(self, direction):
+        mouv = False
         if direction == DROITE:
             for i in xrange(4):
-                self.updateTab(self.mat[i], inverse=True)
+                mouv = mouv or self.updateTab(self.mat[i], inverse=True)
         elif direction == GAUCHE:
             for i in xrange(4):
-                self.updateTab(self.mat[i])
+                mouv = mouv or self.updateTab(self.mat[i])
         elif direction == HAUT:
             for i in xrange(4):
-                self.updateTab(self.mat[:,i])
+                mouv = mouv or self.updateTab(self.mat[:,i])
         elif direction == BAS:
             for i in xrange(4):
-                self.updateTab(self.mat[:,i], inverse=True)
+                mouv = mouv or self.updateTab(self.mat[:,i], inverse=True)
+        return mouv
 
     def play(self, direction):
         for i in range(4):
             print self.mat[i] 
         print 
-        self.update(direction)
-        self.generateRandom()
+        if self.update(direction):
+            self.generateRandom()
         for i in xrange(4):
             print self.mat[i]
         print self.free.ravel() 
