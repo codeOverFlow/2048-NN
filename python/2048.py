@@ -27,59 +27,50 @@ class Game():
     def getLinearMap(self):
         return self.mat.flatten()
 
+    def updateTab(self, tab, inverse=False):
+        if inverse:
+            tab = tab[::-1]
+
+        ind = 0
+        next_values = [i+1 for i,v in enumerate(tab[1:]) if tab[1:][i] != 0]
+
+        mouv=False
+
+        for n in next_values:
+            print n
+            if tab[ind] == 0:
+                tab[ind] = tab[n]
+                tab[n] = 0
+                mouv=True
+            elif tab[ind] == tab[n]:
+                tab[ind] *= 2
+                tab[n] = 0
+                ind+=1
+                mouv=True
+            elif n != ind+1:
+                tab[ind+1] = tab[n]
+                tab[n] = 0
+                ind+=1
+                mouv=True
+            else:
+                ind+=1
+
+        return mouv
+
+
     def update(self, direction):
         if direction == DROITE:
             for i in xrange(4):
-                for k in xrange(3, 0, -1):
-                    for j in xrange(k-1, -1, -1):
-                        if self.mat[i][k] == self.mat[i][j]:
-                            self.mat[i][k] *= 2
-                            self.mat[i][j] = 0
-                            if self.mat[i][k] != 0:
-                                self.score += 1
-                                break
-                        elif self.mat[i][k] == 0:
-                            self.mat[i][k] = self.mat[i][j]
-                            self.mat[i][j] = 0
+                self.updateTab(self.mat[i], inverse=True)
         elif direction == GAUCHE:
             for i in xrange(4):
-                for k in xrange(3):
-                    for j in xrange(k+1, 4):
-                        if self.mat[i][k] == self.mat[i][j]:
-                            self.mat[i][k] *= 2
-                            self.mat[i][j] = 0
-                            if self.mat[i][k] != 0:
-                                self.score += 1
-                                break
-                        elif self.mat[i][k] == 0:
-                            self.mat[i][k] = self.mat[i][j]
-                            self.mat[i][j] = 0
+                self.updateTab(self.mat[i])
         elif direction == HAUT:
             for i in xrange(4):
-                for k in xrange(3):
-                    for j in xrange(k+1, 4):
-                        if self.mat[k][i] == self.mat[j][i]:
-                            self.mat[k][i] *= 2
-                            self.mat[j][i] = 0
-                            if self.mat[k][i] != 0:
-                                self.score += 1
-                                break
-                        elif self.mat[k][i] == 0:
-                            self.mat[k][i] = self.mat[j][i]
-                            self.mat[j][i] = 0
+                self.updateTab(self.mat[:,i])
         elif direction == BAS:
             for i in xrange(4):
-                for k in xrange(3, 0, -1):
-                    for j in xrange(k-1, -1, -1):
-                        if self.mat[k][i] == self.mat[j][i]:
-                            self.mat[k][i] *= 2
-                            self.mat[j][i] = 0
-                            if self.mat[k][i] != 0:
-                                self.score += 1
-                                break
-                        elif self.mat[k][i] == 0:
-                            self.mat[k][i] = self.mat[j][i]
-                            self.mat[j][i] = 0
+                self.updateTab(self.mat[:,i], inverse=True)
 
     def play(self, direction):
         for i in range(4):
