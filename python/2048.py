@@ -88,7 +88,9 @@ class Game():
         return mouv, score
 
     def update(self, direction):
-        return Game.move(self.mat, direction)
+        mouv,score = Game.move(self.mat, direction)
+        self.score += score
+        return mouv
 
     def play(self, direction):
         for i in range(4):
