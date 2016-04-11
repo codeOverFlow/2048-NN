@@ -111,5 +111,8 @@ g = Game()
 for i in range(4):
     print g.mat[i] 
 
-while g.play(dirs[raw_input()]):
-    continue
+playing=True
+while playing:
+    i = raw_input()
+    if i in dirs:
+        playing = g.play(dirs[i])
