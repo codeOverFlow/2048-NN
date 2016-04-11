@@ -34,24 +34,25 @@ class Game():
         ind = 0
         next_values = [i+1 for i,v in enumerate(tab[1:]) if tab[1:][i] != 0]
 
-        mouv=False
+        mouv = False
 
         for n in next_values:
             print n
             if tab[ind] == 0:
                 tab[ind] = tab[n]
                 tab[n] = 0
-                mouv=True
+                mouv = True
             elif tab[ind] == tab[n]:
                 tab[ind] *= 2
                 tab[n] = 0
-                ind+=1
-                mouv=True
+                ind += 1
+                self.score += 1
+                mouv = True
             elif n != ind+1:
                 tab[ind+1] = tab[n]
                 tab[n] = 0
-                ind+=1
-                mouv=True
+                ind += 1
+                mouv = True
             else:
                 ind+=1
 
