@@ -63,16 +63,16 @@ class Game():
         mouv = False
         if direction == DROITE:
             for i in xrange(4):
-                mouv = mouv or self.updateTab(self.mat[i], inverse=True)
+                mouv = self.updateTab(self.mat[i], inverse=True) or mouv
         elif direction == GAUCHE:
             for i in xrange(4):
-                mouv = mouv or self.updateTab(self.mat[i])
+                mouv = self.updateTab(self.mat[i]) or mouv
         elif direction == HAUT:
             for i in xrange(4):
-                mouv = mouv or self.updateTab(self.mat[:,i])
+                mouv = self.updateTab(self.mat[:,i]) or mouv
         elif direction == BAS:
             for i in xrange(4):
-                mouv = mouv or self.updateTab(self.mat[:,i], inverse=True)
+                mouv = self.updateTab(self.mat[:,i], inverse=True) or mouv
         return mouv
 
     def play(self, direction):
