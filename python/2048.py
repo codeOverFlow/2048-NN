@@ -27,7 +27,8 @@ class Game():
     def getLinearMap(self):
         return self.mat.flatten()
 
-    def updateTab(self, tab, inverse=False):
+    @staticmethod
+    def moveTab(tab, inverse=False):
         if inverse:
             tab = tab[::-1]
 
@@ -35,6 +36,7 @@ class Game():
         next_values = [i+1 for i,v in enumerate(tab[1:]) if tab[1:][i] != 0]
 
         mouv = False
+        score = 0
 
         for n in next_values:
             print n
@@ -46,7 +48,7 @@ class Game():
                 tab[ind] *= 2
                 tab[n] = 0
                 ind += 1
-                self.score += 1
+                score += 1
                 mouv = True
             elif n != ind+1:
                 tab[ind+1] = tab[n]
@@ -56,24 +58,37 @@ class Game():
             else:
                 ind+=1
 
-        return mouv
+        return mouv, score
 
-
-    def update(self, direction):
+    @staticmethod
+    def move(mat, direction):
         mouv = False
+        score = 0
         if direction == DROITE:
             for i in xrange(4):
-                mouv = self.updateTab(self.mat[i], inverse=True) or mouv
+                m,s = Game.moveTab(mat[i], inverse=True)
+                mouv = m or mouv
+                score += s
         elif direction == GAUCHE:
             for i in xrange(4):
-                mouv = self.updateTab(self.mat[i]) or mouv
+                m,s = Game.moveTab(mat[i])
+                mouv = m or mouv
+                score += s
         elif direction == HAUT:
             for i in xrange(4):
-                mouv = self.updateTab(self.mat[:,i]) or mouv
+                m,s = Game.moveTab(mat[:,i])
+                mouv = m or mouv
+                score += s
         elif direction == BAS:
             for i in xrange(4):
-                mouv = self.updateTab(self.mat[:,i], inverse=True) or mouv
-        return mouv
+                m,s = Game.moveTab(mat[:,i], inverse=True)
+                mouv = m or mouv
+                score += s
+
+        return mouv, score
+
+    def update(self, direction):
+        return Game.move(self.mat, direction)
 
     def play(self, direction):
         for i in range(4):
