@@ -92,19 +92,23 @@ class Game():
         self.score += score
         return mouv
 
+    def endGame(self):
+        return self.free.size == 0 and not Game.move(self.mat.copy(), DROITE)[0]  and not Game.move(self.mat.copy(), GAUCHE)[0] and not Game.move(self.mat.copy(), HAUT)[0] and not Game.move(self.mat.copy(), BAS)[0]
+
     def play(self, direction):
-        for i in range(4):
-            print self.mat[i] 
-        print 
         if self.update(direction):
             self.generateRandom()
         for i in xrange(4):
             print self.mat[i]
-        print self.free.ravel() 
-        print self.score 
+        #print self.free.ravel() 
+        print "Score : ", self.score 
         print '\n' 
+        return not self.endGame()
 
 g = Game()
 
-while True:
-    g.play(raw_input())
+for i in range(4):
+    print g.mat[i] 
+
+while g.play(raw_input()):
+    continue
