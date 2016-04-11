@@ -15,6 +15,7 @@ class Game():
     def __init__(self):
         self.mat = np.zeros([4,4])
         self.generateRandom()
+        self.generateRandom()
         self.score = 0
 
     def reFree(self):
