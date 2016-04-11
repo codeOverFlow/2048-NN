@@ -41,7 +41,6 @@ class Game():
         score = 0
 
         for n in next_values:
-            print n
             if tab[ind] == 0:
                 tab[ind] = tab[n]
                 tab[n] = 0
