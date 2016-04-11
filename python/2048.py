@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 
-from random import randint
+from random import randint, random
 import numpy as np
 
 HAUT = 'HAUT'
@@ -15,6 +15,7 @@ class Game():
     def __init__(self):
         self.mat = np.zeros([4,4])
         self.generateRandom()
+        self.generateRandom()
         self.score = 0
 
     def reFree(self):
@@ -23,7 +24,7 @@ class Game():
     def generateRandom(self):
         self.reFree()
         x,y = self.free[randint(0, len(self.free)-1)]
-        self.mat[x][y] = 2
+        self.mat[x][y] = 2 if random() < 0.9 else 4
         self.reFree()
 
     def getLinearMap(self):
@@ -111,5 +112,8 @@ g = Game()
 for i in range(4):
     print g.mat[i] 
 
-while g.play(dirs[raw_input()]):
-    continue
+playing=True
+while playing:
+    i = raw_input()
+    if i in dirs:
+        playing = g.play(dirs[i])
