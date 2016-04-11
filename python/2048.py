@@ -9,6 +9,8 @@ BAS = 'BAS'
 GAUCHE = 'GAUCHE'
 DROITE = 'DROITE'
 
+dirs = {'d': DROITE, 'g': GAUCHE, 'b': BAS, 'h': HAUT} 
+
 class Game():
     def __init__(self):
         self.mat = np.zeros([4,4])
@@ -93,7 +95,7 @@ class Game():
         return mouv
 
     def endGame(self):
-        return self.free.size == 0 and not Game.move(self.mat.copy(), DROITE)[0]  and not Game.move(self.mat.copy(), GAUCHE)[0] and not Game.move(self.mat.copy(), HAUT)[0] and not Game.move(self.mat.copy(), BAS)[0]
+        return self.free.size == 0 and all(not Game.move(self.mat.copy(), v)[0] for k,v in dirs.iteritems())
 
     def play(self, direction):
         if self.update(direction):
@@ -110,5 +112,5 @@ g = Game()
 for i in range(4):
     print g.mat[i] 
 
-while g.play(raw_input()):
+while g.play(dirs[raw_input()]):
     continue
