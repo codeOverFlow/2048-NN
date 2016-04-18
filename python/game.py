@@ -18,6 +18,12 @@ class Game():
         self.generateRandom()
         self.score = 0
 
+    def reset(self):
+        self.mat = np.zeros([4,4])
+        self.generateRandom()
+        self.generateRandom()
+        self.score = 0
+
     def reFree(self):
         self.free = np.array([(i, j) for i in range(4) for j in range(4) if not self.mat[i][j]])
         
@@ -89,6 +95,11 @@ class Game():
 
         return mouv, score
 
+    def simulate(self, direction):
+        mouv,score = Game.move(self.mat.copy(), direction)
+
+        return mouv, self.score + score
+
     def update(self, direction):
         mouv,score = Game.move(self.mat, direction)
         self.score += score
@@ -100,11 +111,11 @@ class Game():
     def play(self, direction):
         if self.update(direction):
             self.generateRandom()
-        for i in xrange(4):
+        """for i in xrange(4):
             print self.mat[i]
-        #print self.free.ravel() 
+        print self.free.ravel() 
         print "Score : ", self.score 
-        print '\n' 
+        print '\n' """
         return not self.endGame()
 
 
