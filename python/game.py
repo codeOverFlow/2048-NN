@@ -107,13 +107,15 @@ class Game():
         print '\n' 
         return not self.endGame()
 
-g = Game()
 
-for i in range(4):
-    print g.mat[i] 
+if __name__ == '__main__':
+    g = Game()
 
-playing=True
-while playing:
-    i = raw_input()
-    if i in dirs:
-        playing = g.play(dirs[i])
+    for i in range(4):
+        print g.mat[i] 
+
+    playing=True
+    while playing:
+        i = raw_input()
+        if i in dirs:
+            playing = g.play(dirs[i])
