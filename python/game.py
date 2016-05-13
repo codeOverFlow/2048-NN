@@ -100,6 +100,7 @@ class Game():
     def play(self, direction):
         if self.update(direction):
             self.generateRandom()
+        print direction
         for i in xrange(4):
             print self.mat[i]
         #print self.free.ravel() 
